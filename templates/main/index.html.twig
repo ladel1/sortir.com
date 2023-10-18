@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création Sortie{% endblock %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    {{ form(formSortie) }}
+</div>
+<div class="example-wrapper" id="display">    
+    <p> Ville: <span id="ville" ></span></p>
+    <p> Rue: <span id="rue" ></span></p>    
+    <p> Code postal: <span id="cp" ></span></p>
+    <p> Latitude: <span id="lat" ></span></p>
+    <p> Longitude: <span id="long" ></span></p>    
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+    jQuery(document).ready(function($){
+        $("select").change(function(){
+          
+            fetch("http://127.0.0.1:8000/lieu/"+this.value)
+                .then(response=> response.json())
+                .then(
+                    lieu=>{
+                        $("#display").show()
+                        $("#cp").html(lieu.ville.codePostal)
+                        $("#rue").html(lieu.rue)
+                        $("#ville").html(lieu.ville.nom)
+                        $("#lat").html(lieu.latitude)
+                        $("#long").html(lieu.longitude)
+                    }
+                )
+                .catch(
+                    err=>{
+                        $("#cp").html("")
+                        $("#ville").html("")
+                        $("#rue").html("")
+                        $("#lat").html("")
+                        $("#long").html("")
+                        $("#display").hide()
+                    }
+                )
+        })
+    })
+
+</script>
+{% endblock %}
