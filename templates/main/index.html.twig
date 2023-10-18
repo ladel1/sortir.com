@@ -4,17 +4,33 @@
 
 {% block body %}
 
+<div class="container">
+    {{ form_start(formSortie) }}
+    <div class="row">
+        <div class="col-5">        
+            {{ form_row(formSortie.nom) }}
+            {{ form_row(formSortie.dateHeureDebut) }}
+            {{ form_row(formSortie.duree) }}
+            {{ form_row(formSortie.dateLimiteInscription) }}
+            {{ form_row(formSortie.nbInscriptionMax) }}
+            {{ form_row(formSortie.infosSortie) }}
+            {{ form_row(formSortie.save) }}
+        </div>
+        <div class="col-5 offset-2">
+            {{ form_row(formSortie.lieu) }}
+            <div id="display">    
+                <p> Ville: <span id="ville" ></span></p>
+                <p> Rue: <span id="rue" ></span></p>    
+                <p> Code postal: <span id="cp" ></span></p>
+                <p> Latitude: <span id="lat" ></span></p>
+                <p> Longitude: <span id="long" ></span></p>    
+            </div>            
+        </div>
+    </div>
+    {{ form_end(formSortie) }}
+</div>
 
-<div class="example-wrapper">
-    {{ form(formSortie) }}
-</div>
-<div class="example-wrapper" id="display">    
-    <p> Ville: <span id="ville" ></span></p>
-    <p> Rue: <span id="rue" ></span></p>    
-    <p> Code postal: <span id="cp" ></span></p>
-    <p> Latitude: <span id="lat" ></span></p>
-    <p> Longitude: <span id="long" ></span></p>    
-</div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -28,7 +44,6 @@
                 .then(response=> response.json())
                 .then(
                     lieu=>{
-                        $("#display").show()
                         $("#cp").html(lieu.ville.codePostal)
                         $("#rue").html(lieu.rue)
                         $("#ville").html(lieu.ville.nom)
@@ -42,8 +57,7 @@
                         $("#ville").html("")
                         $("#rue").html("")
                         $("#lat").html("")
-                        $("#long").html("")
-                        $("#display").hide()
+                        $("#long").html("")                      
                     }
                 )
         })
