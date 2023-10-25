@@ -17,7 +17,14 @@
             {{ form_row(formSortie.save) }}
         </div>
         <div class="col-5 offset-2">
-            {{ form_row(formSortie.lieu) }}
+            <div class="row">
+                <div class="col-10">
+                    {{ form_row(formSortie.lieu) }}
+                </div>
+                <div class="col-2 p-4">
+                    <button class="btn btn-info" type="button" onclick="openPopup();" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
             <div id="display">    
                 <p> Ville: <span id="ville" ></span></p>
                 <p> Rue: <span id="rue" ></span></p>    
@@ -35,45 +42,5 @@
 
 {% block javascripts %}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-
-    jQuery(document).ready(function($){
-        $("select").change(function(){
-          
-            fetch("http://127.0.0.1:8000/lieu/"+this.value)
-                .then(response=> response.json())
-                .then(
-                    lieu=>{
-                        $("#cp").html(lieu.ville.codePostal)
-                        $("#rue").html(lieu.rue)
-                        $("#ville").html(lieu.ville.nom)
-                        $("#lat").html(lieu.latitude)
-                        $("#long").html(lieu.longitude)
-
-                        let address = `${lieu.rue} ${lieu.ville.nom} France`
-                        let API_KEY = "a12d2bce7c8d6abd13afb6553523ba93"
-                        let API_ENDPOINT = `http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${address}&limit=1`
-                        fetch(API_ENDPOINT)
-                            .then(apiResponse=>apiResponse.json())
-                            .then(data=>{
-                                console.log(data);
-                                // $("#lat").html(data.data[0].latitude);
-                                // $("#long").html(data.data[0].longitude);
-                            })
-
-                    }
-                )
-                .catch(
-                    err=>{
-                        $("#cp").html("")
-                        $("#ville").html("")
-                        $("#rue").html("")
-                        $("#lat").html("")
-                        $("#long").html("")                      
-                    }
-                )
-        })
-    })
-
-</script>
+<script src="{{ asset('js/main.js') }}"></script>
 {% endblock %}

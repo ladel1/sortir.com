@@ -3,18 +3,32 @@
 {% block title %}popup{% endblock %}
 
 {% block body %}
-<a href="#" result="azerty" onclick="return CloseMySelf(this);">Allow</a>
-<a href="#" result="querty" onclick="return CloseMySelf(this);">Don't Allow</a>
+    <div class="row text-center">
+        <h2>Créer un lieu</h2>
+    </div>
+    <input type="hidden" id="data" value="{{lieu.id}}-{{lieu.nom}}">    
+    <div class="row">
+        <div class="col-8 offset-2">
+        
+            {{form(form)}}
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     <script>
-        function CloseMySelf(sender) {
-            try {
-                window.opener.HandlePopupResult(sender.getAttribute("result"));
-            }
-            catch (err) {}
-            window.close();
-            return false;
+        //return CloseMySelf(this);
+        const hiddenNode = document.querySelector("#data");
+        CloseMySelf()
+        function CloseMySelf() {     
+            if(hiddenNode.value.length>1){
+                console.log(hiddenNode.value);
+                try {
+                    window.opener.HandlePopupResult(hiddenNode.value);
+                }
+                catch (err) {}
+                window.close();
+                return false;
+            }   
         }        
     </script>
 {% endblock %}

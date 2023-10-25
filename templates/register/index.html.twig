@@ -5,18 +5,10 @@
 {% block body %}
 {{form(formCSV)}}
 
-<button class="btn btn-info" onclick="openPopup();" >Ouvrir</button>
+
 {% endblock %}
 
 
 
 {% block javascripts %}
-    <script>
-       function HandlePopupResult(result) {
-            alert("result of popup is: " + result);
-        }     
-        function openPopup(){
-            window.open('http://127.0.0.1:8000/popup', 'about', 'width=500,height=300,scrollbars=yes,left=650,top=500');
-        }
-    </script>
 {% endblock %}
