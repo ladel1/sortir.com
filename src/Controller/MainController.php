@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,5 +29,11 @@ class MainController extends AbstractController
     public function lieu(Lieu $lieu): Response
     {
         return $this->json($lieu);
-    }    
+    }   
+    
+    #[Route('/test', name: 'app_test')]
+    public function test(SortieRepository $repo): Response
+    {
+        dd($repo->findByFilter());
+    }       
 }

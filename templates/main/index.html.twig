@@ -10,9 +10,9 @@
         <div class="col-5">        
             {{ form_row(formSortie.nom) }}
             {{ form_row(formSortie.dateHeureDebut) }}
-            {{ form_row(formSortie.duree) }}
             {{ form_row(formSortie.dateLimiteInscription) }}
             {{ form_row(formSortie.nbInscriptionMax) }}
+            {{ form_row(formSortie.duree) }}
             {{ form_row(formSortie.infosSortie) }}
             {{ form_row(formSortie.save) }}
         </div>
@@ -49,6 +49,18 @@
                         $("#ville").html(lieu.ville.nom)
                         $("#lat").html(lieu.latitude)
                         $("#long").html(lieu.longitude)
+
+                        let address = `${lieu.rue} ${lieu.ville.nom} France`
+                        let API_KEY = "a12d2bce7c8d6abd13afb6553523ba93"
+                        let API_ENDPOINT = `http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${address}&limit=1`
+                        fetch(API_ENDPOINT)
+                            .then(apiResponse=>apiResponse.json())
+                            .then(data=>{
+                                console.log(data);
+                                // $("#lat").html(data.data[0].latitude);
+                                // $("#long").html(data.data[0].longitude);
+                            })
+
                     }
                 )
                 .catch(
