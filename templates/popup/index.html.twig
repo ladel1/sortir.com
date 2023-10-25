@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}popup{% endblock %}
+
+{% block body %}
+<a href="#" result="azerty" onclick="return CloseMySelf(this);">Allow</a>
+<a href="#" result="querty" onclick="return CloseMySelf(this);">Don't Allow</a>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function CloseMySelf(sender) {
+            try {
+                window.opener.HandlePopupResult(sender.getAttribute("result"));
+            }
+            catch (err) {}
+            window.close();
+            return false;
+        }        
+    </script>
+{% endblock %}
